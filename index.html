@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>警报</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+<!-- R18 确认页面 -->
+<div class="r18-confirm" id="r18-confirm">
+  <div class="r18-content">
+    <h1>r18确认</h1>
+    <div class="r18-buttons">
+      <button class="r18-btn underage">未满18</button>
+      <button class="r18-btn adult" id="adult-btn">已满18</button>
+    </div>
+  </div>
+</div>
+
+<div class="win10-window" id="window">
+  <div class="win10-titlebar" id="titlebar">
+    <div class="win10-title">Windows 安全警报 - 文件已加密</div>
+    <div class="win10-controls">
+      <button class="win10-btn">─</button>
+      <button class="win10-btn">☐</button>
+      <button class="win10-btn close">✕</button>
+    </div>
+  </div>
+
+  <div class="win10-content">
+    <h1>⚠️ 警告：您的文件已被高强度加密！</h1>
+    <div class="count">剩余解密时间：<span id="time">60:00</span></div>
+
+    <h2>您的电脑已被加密</h2>
+    <p>您的照片、视频、文档、数据库、系统文件均已被高强度加密算法锁定，无法正常访问。</p>
+    <p class="warn">若不在指定时间内完成解密，所有文件将永久损坏，无法恢复。</p>
+    <p>立即向 <i><u>xiamenerwai@ntdm.com</u></i> 联系，获取解密密钥。</p>
+
+    <h2>重要警告</h2>
+    <p>请勿尝试关闭此窗口，否则加密将立即永久化。</p>
+    <p>请勿重启或关闭电脑，否则所有数据将直接丢失。</p>
+    <p>请勿使用杀毒软件或修复工具，否则将触发文件自毁程序。</p>
+
+    <h2>解密密钥</h2>
+    <div class="decrypt-box">
+      <input class="decrypt-input" type="text" placeholder="请输入您的解密密钥">
+      <button class="decrypt-btn">开始解密</button>
+      <div class="error" id="error"></div>
+    </div>
+
+    <h2>解密说明</h2>
+    <div class="pay-box">
+      <p>您必须按照指定方式支付赎金，才能获取唯一解密密钥。</p>
+      <p>一旦超时，密钥将被永久销毁，您的所有文件将永远无法恢复。</p>
+    </div>
+
+    <h2>听着</h2>
+    <p>“kick out”主要表示“把某人赶出去”或“开除”,不直接表示“删除”。</p>
+    <p>虽然“kick out”有时可以在比喻或口语中表示“把某人或某物移除”,但它不等同于计算机或文档上的“删除”。如果你想表达“删除文件、信息或条目”，更常用的词是：</p>
+    <p>delete,删除,remove(移除),erase(擦除)</p>
+  </div>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
