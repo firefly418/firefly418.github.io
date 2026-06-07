@@ -1,0 +1,143 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const modules = document.querySelectorAll('.module');
+    const scatterBtn = document.getElementById('scatter-btn');
+    let zIndexCounter = 10;
+
+    function scatterModules() {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const padding = vw < 600 ? 16 : 40;
+        const gap = 10;
+        const maxRetries = 200;
+
+        const moduleData = [];
+        modules.forEach(mod => {
+            if (mod.classList.contains('mod-profile')) {
+                mod.style.left = `${padding}px`;
+                mod.style.top = `${padding}px`;
+                mod.dataset.rot = 0;
+                mod.style.transform = 'rotate(0deg)';
+                const rect = mod.getBoundingClientRect();
+                moduleData.push({ mod, w: rect.width, h: rect.height, fixed: true });
+                return;
+            }
+            const rect = mod.getBoundingClientRect();
+            moduleData.push({ mod, w: rect.width, h: rect.height });
+        });
+
+        moduleData.sort((a, b) => (b.w * b.h) - (a.w * a.h));
+
+        const placed = [];
+
+        moduleData.forEach(({ mod, w, h, fixed }) => {
+            if (fixed) {
+                placed.push({ left: padding, top: padding, width: w, height: h });
+                return;
+            }
+            let success = false;
+            for (let attempt = 0; attempt < maxRetries; attempt++) {
+                const randomX = padding + Math.random() * Math.max(0, vw - w - padding * 2);
+                const randomY = padding + Math.random() * Math.max(0, vh - h - padding * 2);
+
+                let overlaps = false;
+                for (const p of placed) {
+                    if (
+                        randomX < p.left + p.width + gap &&
+                        randomX + w + gap > p.left &&
+                        randomY < p.top + p.height + gap &&
+                        randomY + h + gap > p.top
+                    ) {
+                        overlaps = true;
+                        break;
+                    }
+                }
+
+                if (!overlaps) {
+                    mod.style.left = `${randomX}px`;
+                    mod.style.top = `${randomY}px`;
+                    const randomRot = (Math.random() - 0.5) * 8;
+                    mod.dataset.rot = randomRot;
+                    mod.style.transform = `rotate(${randomRot}deg)`;
+                    placed.push({ left: randomX, top: randomY, width: w, height: h });
+                    success = true;
+                    break;
+                }
+            }
+
+            if (!success) {
+                const randomX = padding + Math.random() * Math.max(0, vw - w - padding * 2);
+                const randomY = padding + Math.random() * Math.max(0, vh - h - padding * 2);
+                mod.style.left = `${randomX}px`;
+                mod.style.top = `${randomY}px`;
+                const randomRot = (Math.random() - 0.5) * 8;
+                mod.dataset.rot = randomRot;
+                mod.style.transform = `rotate(${randomRot}deg)`;
+                placed.push({ left: randomX, top: randomY, width: w, height: h });
+            }
+        });
+    }
+
+    setTimeout(scatterModules, 50);
+
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(scatterModules, 200);
+    });
+
+    if (scatterBtn) scatterBtn.addEventListener('click', scatterModules);
+
+    modules.forEach(mod => {
+
+        let isDragging = false;
+        let startX, startY, initialLeft, initialTop;
+
+        const startDrag = (e) => {
+            if (e.target.tagName.toLowerCase() === 'a' || e.target.tagName.toLowerCase() === 'button') return;
+
+            isDragging = true;
+            zIndexCounter++;
+            mod.style.zIndex = zIndexCounter;
+
+            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+
+            startX = clientX;
+            startY = clientY;
+            initialLeft = mod.offsetLeft;
+            initialTop = mod.offsetTop;
+
+            mod.classList.add('dragging');
+            mod.style.transform = `rotate(0deg) scale(1.02)`;
+        };
+
+        const onDrag = (e) => {
+            if (!isDragging) return;
+            if (e.cancelable) e.preventDefault();
+
+            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+
+            mod.style.left = `${initialLeft + (clientX - startX)}px`;
+            mod.style.top = `${initialTop + (clientY - startY)}px`;
+        };
+
+        const stopDrag = () => {
+            if (isDragging) {
+                isDragging = false;
+                mod.classList.remove('dragging');
+                const newRot = (Math.random() - 0.5) * 8;
+                mod.dataset.rot = newRot;
+                mod.style.transform = `rotate(${newRot}deg) scale(1)`;
+            }
+        };
+
+        mod.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', onDrag, { passive: false });
+        document.addEventListener('mouseup', stopDrag);
+
+        mod.addEventListener('touchstart', startDrag, { passive: false });
+        document.addEventListener('touchmove', onDrag, { passive: false });
+        document.addEventListener('touchend', stopDrag);
+    });
+});
