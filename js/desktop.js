@@ -182,9 +182,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const bgModule = document.getElementById('fullscreen-bg-module');
     const bgInput = document.getElementById('bg-image-input');
     const clearBgBtn = document.getElementById('clear-bg-btn');
+    const bgFileName = document.getElementById('bg-file-name');
 
     let savedBgImage = null;
     let isCustomFullscreen = false;
+    let fullscreenResizeTimer = null;
 
     function checkFullscreen() {
         return !!(document.fullscreenElement || document.webkitFullscreenElement) ||
@@ -195,7 +197,6 @@ document.addEventListener("DOMContentLoaded", () => {
         isCustomFullscreen = true;
         document.body.classList.add('fullscreen-active');
         if (bgModule) {
-            bgModule.style.display = 'flex';
             bgModule.style.left = '40px';
             bgModule.style.top = '40px';
             bgModule.dataset.rot = '0';
@@ -209,7 +210,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function exitFullscreen() {
         isCustomFullscreen = false;
         document.body.classList.remove('fullscreen-active');
-        if (bgModule) bgModule.style.display = 'none';
         if (bgOverlay) bgOverlay.style.backgroundImage = '';
     }
 
@@ -224,17 +224,24 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener('fullscreenchange', onFullscreenChange);
     document.addEventListener('webkitfullscreenchange', onFullscreenChange);
     window.addEventListener('resize', () => {
-        if (checkFullscreen() && !isCustomFullscreen) {
-            enterFullscreen();
-        } else if (!checkFullscreen() && isCustomFullscreen) {
-            exitFullscreen();
-        }
+        clearTimeout(fullscreenResizeTimer);
+        fullscreenResizeTimer = setTimeout(() => {
+            if (checkFullscreen() && !isCustomFullscreen) {
+                enterFullscreen();
+            } else if (!checkFullscreen() && isCustomFullscreen) {
+                exitFullscreen();
+            }
+        }, 200);
     });
 
     if (bgInput) {
         bgInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (!file) return;
+            if (bgFileName) {
+                bgFileName.textContent = file.name;
+                bgFileName.style.display = 'block';
+            }
             const reader = new FileReader();
             reader.onload = (ev) => {
                 savedBgImage = ev.target.result;
@@ -251,6 +258,10 @@ document.addEventListener("DOMContentLoaded", () => {
             savedBgImage = null;
             if (bgOverlay) bgOverlay.style.backgroundImage = '';
             if (bgInput) bgInput.value = '';
+            if (bgFileName) {
+                bgFileName.textContent = '';
+                bgFileName.style.display = 'none';
+            }
         });
     }
 });

@@ -64,11 +64,48 @@ body.is-home {
     touch-action: none;
 }
 
-.controls {
-    position: absolute;
-    bottom: max(24px, env(safe-area-inset-bottom));
+.top-controls {
+    position: fixed;
+    top: 24px;
     right: max(24px, env(safe-area-inset-right));
     z-index: 9999;
+    display: flex;
+    gap: 8px;
+}
+
+.scatter-btn,
+.theme-toggle {
+    width: 44px;
+    height: 44px;
+    padding: 0 !important;
+    background: var(--card-bg) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px var(--shadow-base);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.scatter-btn:hover,
+.theme-toggle:hover {
+    background: var(--text-main) !important;
+    color: var(--card-bg) !important;
+}
+
+.scatter-btn .svg-icon,
+.theme-toggle .svg-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.scatter-btn:hover .svg-icon,
+.theme-toggle:hover .svg-icon {
+    transform: rotate(-30deg);
 }
 
 button {
@@ -571,7 +608,13 @@ body.fullscreen-active .mod-fullscreen-bg {
 }
 
 #clear-bg-btn {
+    width: 100%;
     margin-top: 8px;
+}
+
+#bg-file-name {
+    display: block;
+    word-break: break-all;
 }
 
 .bg-file-btn {
@@ -620,40 +663,6 @@ body.is-post .global-footer {
     border-radius: 2px;
 }
 
-
-.theme-toggle {
-    position: fixed;
-    top: 24px;
-    right: max(24px, env(safe-area-inset-right));
-    z-index: 9999;
-    width: 44px;
-    height: 44px;
-    padding: 0 !important;
-    background: var(--card-bg) !important;
-    color: var(--text-main) !important;
-    border: 1px solid var(--border-color);
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 12px var(--shadow-base);
-}
-
-.theme-toggle:hover {
-    background: var(--text-main) !important;
-    color: var(--card-bg) !important;
-}
-
-.theme-toggle .svg-icon {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.3s ease;
-}
-
-.theme-toggle:hover .svg-icon {
-    transform: rotate(-30deg);
-}
 
 .theme-toggle .sun-icon {
     display: none;
