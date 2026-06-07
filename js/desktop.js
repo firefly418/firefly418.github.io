@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const modules = document.querySelectorAll('.module');
     const scatterBtn = document.getElementById('scatter-btn');
     let zIndexCounter = 10;
+    let activeModule = null;
+    let startX, startY, initialLeft, initialTop;
 
     function scatterModules() {
         const vw = window.innerWidth;
@@ -87,57 +89,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (scatterBtn) scatterBtn.addEventListener('click', scatterModules);
 
+    function startDrag(e, mod) {
+        if (e.target.tagName.toLowerCase() === 'a' || e.target.tagName.toLowerCase() === 'button') return;
+
+        activeModule = mod;
+        zIndexCounter++;
+        mod.style.zIndex = zIndexCounter;
+
+        const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+
+        startX = clientX;
+        startY = clientY;
+        initialLeft = mod.offsetLeft;
+        initialTop = mod.offsetTop;
+
+        mod.classList.add('dragging');
+        mod.style.transform = 'rotate(0deg) scale(1.02)';
+    }
+
+    function onDrag(e) {
+        if (!activeModule) return;
+        if (e.cancelable) e.preventDefault();
+
+        const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+
+        activeModule.style.left = `${initialLeft + (clientX - startX)}px`;
+        activeModule.style.top = `${initialTop + (clientY - startY)}px`;
+    }
+
+    function stopDrag() {
+        if (activeModule) {
+            activeModule.classList.remove('dragging');
+            const newRot = (Math.random() - 0.5) * 8;
+            activeModule.dataset.rot = newRot;
+            activeModule.style.transform = `rotate(${newRot}deg) scale(1)`;
+            activeModule = null;
+        }
+    }
+
+    document.addEventListener('mousemove', onDrag, { passive: false });
+    document.addEventListener('mouseup', stopDrag);
+    document.addEventListener('touchmove', onDrag, { passive: false });
+    document.addEventListener('touchend', stopDrag);
+
     modules.forEach(mod => {
-
-        let isDragging = false;
-        let startX, startY, initialLeft, initialTop;
-
-        const startDrag = (e) => {
-            if (e.target.tagName.toLowerCase() === 'a' || e.target.tagName.toLowerCase() === 'button') return;
-
-            isDragging = true;
-            zIndexCounter++;
-            mod.style.zIndex = zIndexCounter;
-
-            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
-
-            startX = clientX;
-            startY = clientY;
-            initialLeft = mod.offsetLeft;
-            initialTop = mod.offsetTop;
-
-            mod.classList.add('dragging');
-            mod.style.transform = `rotate(0deg) scale(1.02)`;
-        };
-
-        const onDrag = (e) => {
-            if (!isDragging) return;
-            if (e.cancelable) e.preventDefault();
-
-            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
-
-            mod.style.left = `${initialLeft + (clientX - startX)}px`;
-            mod.style.top = `${initialTop + (clientY - startY)}px`;
-        };
-
-        const stopDrag = () => {
-            if (isDragging) {
-                isDragging = false;
-                mod.classList.remove('dragging');
-                const newRot = (Math.random() - 0.5) * 8;
-                mod.dataset.rot = newRot;
-                mod.style.transform = `rotate(${newRot}deg) scale(1)`;
-            }
-        };
-
-        mod.addEventListener('mousedown', startDrag);
-        document.addEventListener('mousemove', onDrag, { passive: false });
-        document.addEventListener('mouseup', stopDrag);
-
-        mod.addEventListener('touchstart', startDrag, { passive: false });
-        document.addEventListener('touchmove', onDrag, { passive: false });
-        document.addEventListener('touchend', stopDrag);
+        mod.addEventListener('mousedown', (e) => startDrag(e, mod));
+        mod.addEventListener('touchstart', (e) => startDrag(e, mod), { passive: false });
     });
 });
