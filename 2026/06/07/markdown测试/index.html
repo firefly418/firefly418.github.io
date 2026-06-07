@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hello World - Firefly</title>
+    <title>markdown测试 - Firefly</title>
     <meta name="description" content="I love you.">
     
 <link rel="stylesheet" href="/css/style.css">
@@ -52,28 +52,106 @@
 <!-- 卡片 -->
 <article class="post-container module"
     style="position: relative; margin: 80px auto 40px auto; transform: none; max-width: 800px; width: 90%; cursor: auto;">
-    <h1 style="font-size: 28px; margin-bottom: 8px;">Hello World</h1>
+    <h1 style="font-size: 28px; margin-bottom: 8px;">markdown测试</h1>
     <div class="post-meta" style="margin-bottom: 32px;">
-        发布于 2026.06.06
+        发布于 2026.06.07
             
     </div>
 
     <!-- 正文 -->
     <div class="post-content">
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start">Quick Start</h2>
-<h3 id="Create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <h2 id="标题测试">标题测试</h2>
+<h1>一级标题</h1>
+<h2 id="二级标题">二级标题</h2>
+<h3 id="三级标题">三级标题</h3>
+<h4 id="四级标题">四级标题</h4>
+<h5 id="五级标题">五级标题</h5>
+<h6 id="六级标题">六级标题</h6>
+<hr>
+<h2 id="文本样式">文本样式</h2>
+<p><strong>加粗文字</strong> | <em>斜体文字</em> | <em><strong>加粗斜体</strong></em> | <s>删除线</s> | <code>行内代码</code></p>
+<hr>
+<h2 id="引用">引用</h2>
+<blockquote>
+<p>这是一段引用文字。</p>
+<p>引用可以多行。</p>
+<blockquote>
+<p>嵌套引用</p>
+</blockquote>
+</blockquote>
+<hr>
+<h2 id="列表">列表</h2>
+<h3 id="无序列表">无序列表</h3>
+<ul>
+<li>项目一</li>
+<li>项目二
+<ul>
+<li>子项目 A</li>
+<li>子项目 B</li>
+</ul>
+</li>
+<li>项目三</li>
+</ul>
+<h3 id="有序列表">有序列表</h3>
+<ol>
+<li>第一步</li>
+<li>第二步</li>
+<li>第三步</li>
+</ol>
+<hr>
+<h2 id="代码块">代码块</h2>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Hello, <span class="subst">$&#123;name&#125;</span>!`</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">greet</span>(<span class="string">&#x27;World&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="keyword">return</span> fibonacci(n - <span class="number">1</span>) + fibonacci(n - <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(fibonacci(<span class="number">10</span>))</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="表格">表格</h2>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>状态</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题</td>
+<td>✅</td>
+<td>支持六级</td>
+</tr>
+<tr>
+<td>列表</td>
+<td>✅</td>
+<td>有序/无序</td>
+</tr>
+<tr>
+<td>代码</td>
+<td>✅</td>
+<td>多语言高亮</td>
+</tr>
+<tr>
+<td>表格</td>
+<td>✅</td>
+<td>对齐</td>
+</tr>
+<tr>
+<td>图片</td>
+<td>✅</td>
+<td>本地/远程</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="链接">链接</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com">GitHub</a> 和 <a target="_blank" rel="noopener" href="https://www.google.com">Google</a></p>
+<hr>
+<h2 id="分割线">分割线</h2>
+<hr>
+<h2 id="任务列表">任务列表</h2>
+<ul>
+<li>[x] 已完成的任务</li>
+<li>[ ] 未完成的任务</li>
+<li>[ ] 待办事项</li>
+</ul>
 
     </div>
 

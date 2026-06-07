@@ -138,4 +138,43 @@ document.addEventListener("DOMContentLoaded", () => {
         mod.addEventListener('mousedown', (e) => startDrag(e, mod));
         mod.addEventListener('touchstart', (e) => startDrag(e, mod), { passive: false });
     });
+
+    const clockTime = document.getElementById('clock-time');
+    const clockDate = document.getElementById('clock-date');
+
+    if (clockTime && clockDate) {
+        const weekDays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+
+        function updateClock() {
+            const now = new Date();
+            const h = now.getHours();
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            const y = now.getFullYear();
+            const mo = now.getMonth() + 1;
+            const d = now.getDate();
+            const w = weekDays[now.getDay()];
+
+            clockTime.textContent = h + '时 ' + m + '分 ' + s + '秒';
+            clockDate.textContent = y + '年 ' + mo + '月' + d + '日 ' + w;
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    }
+
+    const avatarWrap = document.getElementById('avatar-wrap');
+    const avatarImg = document.getElementById('avatar-img');
+    const avatarGif = document.getElementById('avatar-gif');
+
+    if (avatarWrap && avatarImg && avatarGif) {
+        avatarWrap.addEventListener('dblclick', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            avatarGif.style.display = 'block';
+            setTimeout(() => {
+                avatarGif.style.display = 'none';
+            }, 2000);
+        });
+    }
 });
