@@ -102,7 +102,14 @@
                             }
                         });
                     </script>
-                    
+    <div id="fullscreen-bg-overlay"></div>
+    <div class="module mod-fullscreen-bg" id="fullscreen-bg-module">
+        <h3>自定义背景</h3>
+        <p style="font-size:13px;color:var(--text-muted);margin:0;">上传一张图片作为网页背景</p>
+        <label for="bg-image-input" class="bg-file-btn">选择图片</label>
+        <input type="file" id="bg-image-input" accept="image/*" hidden>
+        <button id="clear-bg-btn" style="width:100%;margin-top:8px;">恢复默认背景</button>
+    </div>
 </body>
 
 </html>

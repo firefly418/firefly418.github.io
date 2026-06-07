@@ -177,4 +177,80 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 2000);
         });
     }
+
+    const bgOverlay = document.getElementById('fullscreen-bg-overlay');
+    const bgModule = document.getElementById('fullscreen-bg-module');
+    const bgInput = document.getElementById('bg-image-input');
+    const clearBgBtn = document.getElementById('clear-bg-btn');
+
+    let savedBgImage = null;
+    let isCustomFullscreen = false;
+
+    function checkFullscreen() {
+        return !!(document.fullscreenElement || document.webkitFullscreenElement) ||
+               (window.innerHeight >= screen.height - 5 && window.innerWidth >= screen.width - 5);
+    }
+
+    function enterFullscreen() {
+        isCustomFullscreen = true;
+        document.body.classList.add('fullscreen-active');
+        if (bgModule) {
+            bgModule.style.display = 'flex';
+            bgModule.style.left = '40px';
+            bgModule.style.top = '40px';
+            bgModule.dataset.rot = '0';
+            bgModule.style.transform = 'rotate(0deg)';
+        }
+        if (savedBgImage && bgOverlay) {
+            bgOverlay.style.backgroundImage = `url(${savedBgImage})`;
+        }
+    }
+
+    function exitFullscreen() {
+        isCustomFullscreen = false;
+        document.body.classList.remove('fullscreen-active');
+        if (bgModule) bgModule.style.display = 'none';
+        if (bgOverlay) bgOverlay.style.backgroundImage = '';
+    }
+
+    function onFullscreenChange() {
+        if (checkFullscreen()) {
+            enterFullscreen();
+        } else {
+            exitFullscreen();
+        }
+    }
+
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+    window.addEventListener('resize', () => {
+        if (checkFullscreen() && !isCustomFullscreen) {
+            enterFullscreen();
+        } else if (!checkFullscreen() && isCustomFullscreen) {
+            exitFullscreen();
+        }
+    });
+
+    if (bgInput) {
+        bgInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                savedBgImage = ev.target.result;
+                if (bgOverlay) {
+                    bgOverlay.style.backgroundImage = `url(${savedBgImage})`;
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    if (clearBgBtn) {
+        clearBgBtn.addEventListener('click', () => {
+            savedBgImage = null;
+            if (bgOverlay) bgOverlay.style.backgroundImage = '';
+            if (bgInput) bgInput.value = '';
+        });
+    }
 });
